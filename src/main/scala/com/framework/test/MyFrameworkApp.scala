@@ -6,12 +6,12 @@ import scala.collection.mutable.ArrayBuffer
 @MyFrameworkApplication
 object People{
   @MyMapping("/2")
-  def speak(@RequestAttribute("name")word:String)={
-    println(word)
+  def speak(@RequestAttribute(List("word"))param:List[String])={
+    println(param)
   }
   @MyMapping("/3")
-  def listen(@RequestAttribute("pwd")pwd:String, @RequestAttribute("user")user:String)={
-    println(pwd)
+  def listen(@RequestAttribute(List("pwd","user"))param:List[String]):String={
+    "hello,"+param(1)+",your pwd is:"+param(0)
   }
 }
 object A{}
