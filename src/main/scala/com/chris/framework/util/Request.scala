@@ -4,7 +4,7 @@ import java.io.InputStream
 import java.net.URLDecoder.decode
 import java.util.StringTokenizer
 
-case class Request(var method:String,var url:String,var parameter:Map[String,String],var header:Map[String,String],var body:Map[String,Object]){}
+case class Request(var method:String,var url:String,var parameter:Map[String,String],var header:Map[String,String],var body:Map[String,String]){}
 
 class WarpRequest(inputStream: InputStream){
 
@@ -20,6 +20,9 @@ class WarpRequest(inputStream: InputStream){
     val data = new Array[Byte](20480)
     var requestParameter:String = ""
     val len:Int = inputStream.read(data)
+    if(len==(-1)){
+      return null
+    }
     requestInfo = new String(data,0,len)
     val firstLine:String = requestInfo.substring(0,requestInfo.indexOf(CRLF))
     val index:Int = requestInfo.indexOf("/")
@@ -81,23 +84,7 @@ class WarpRequest(inputStream: InputStream){
     }
     parameterMapValues
   }
+  def close()={
+    inputStream.close()
+  }
 }
-
-
-//POST / HTTP/1.1
-//x: sx
-//gfg: gfdg
-//Content-Type: text/plain
-//User-Agent: PostmanRuntime/7.16.3
-//Accept: */*
-//Cache-Control: no-cache
-//Postman-Token: fe3f4f08-5b87-4e24-bd48-a5a199deda0a
-//Host: localhost:8081
-//Accept-Encoding: gzip, deflate
-//Content-Length: 27
-//Connection: keep-alive
-//
-//{
-//	"xx":"xxx",
-//	"yy":"yy"
-//}
