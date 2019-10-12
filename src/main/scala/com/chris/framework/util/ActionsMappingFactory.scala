@@ -1,11 +1,11 @@
 package com.chris.framework.util
 
 import scala.collection.mutable.Map
+import scala.util.matching.Regex
 object ActionsMappingFactory {
   val runtime = scala.reflect.runtime.universe
-  var actions:Map[String,Map[runtime.MethodMirror,Array[String]]] =  Map()
+  private var actions:Map[String,Map[runtime.MethodMirror,Array[String]]] =  Map()
   def createAction(className:String): Unit ={
-    println(className)
     val mirror = runtime.runtimeMirror(getClass.getClassLoader)
     val objMirror = mirror.staticModule(className)
     val methods = mirror.reflectModule(objMirror)
@@ -18,7 +18,6 @@ object ActionsMappingFactory {
         if(y.tree.tpe.toString=="com.chris.framework.annotation.MyMapping"){
           val termTag = runtime.TermName(x.toString.split(" ").apply(1))
           val actionName = y.toString.split("\"").apply(1)
-          println(termTag+"------"+actionName)
           val methodObj = methods.symbol.typeSignature.member(termTag).asMethod
           val realMethod = obj.reflectMethod(methodObj)
           actions+=( actionName -> Map(realMethod->Array[String]()))
@@ -26,7 +25,11 @@ object ActionsMappingFactory {
             z.foreach(u=>
               u.annotations.foreach(v=>
                 if(v.tree.tpe.toString=="com.chris.framework.annotation.RequestAttribute"){
-                  actions(actionName)(realMethod)=actions(actionName)(realMethod).:+(v.toString.split("\"").toBuffer.drop(1).dropRight(1)(0))
+                  if(v.toString.contains(",")){
+                    v.toString.split(",").foreach(str=>actions(actionName)(realMethod)=actions(actionName)(realMethod).:+(str.split("\"")(1)))
+                  }
+                  else
+                    actions(actionName)(realMethod)=actions(actionName)(realMethod).:+(v.toString.split("\"")(1))
                 }
               )
             )
@@ -35,12 +38,16 @@ object ActionsMappingFactory {
       )
     )
   }
-
-  def scanController()={
+  def getAllActions() ={
     ClassesCollector.getClassPathList().foreach(x => createAction(x))
-    println(actions)
+    this
   }
-  def main(args: Array[String]): Unit = {
-    scanController()
+  def getAction(name:String):Map[String,Map[runtime.MethodMirror,Array[String]]]={
+    if(actions.contains(name)){
+      Map(name->actions(name))
+    }
+    else
+      null
   }
+
 }
