@@ -55,12 +55,12 @@ class Response{
     header.append(CRLF) //分隔符
   }
   def push2Client(code:Int)={
-    var tempCode = code
-    if(header==null)
-      tempCode = 500
-    createHeader(tempCode)
+    createHeader(code)
     bw.append(header.toString)
     bw.append(content.toString)
     bw.flush
+  }
+  def closeIO()={
+    bw.close()
   }
 }
