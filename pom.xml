@@ -10,19 +10,12 @@
 
     <properties>
         <encoding>UTF-8</encoding>
-        <scala.version>2.13.0</scala.version>
+        <scala.version>2.11.8</scala.version>
         <scala.compat.version>2.11</scala.compat.version>
         <akka.version>2.4.17</akka.version>
     </properties>
 
     <dependencies>
-        <!-- 添加scala的依赖 -->
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-
         <!-- 添加akka的actor依赖 -->
         <dependency>
             <groupId>com.typesafe.akka</groupId>
@@ -40,37 +33,7 @@
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-reflect</artifactId>
-            <version>2.13.0</version>
+            <version>${scala.version}</version>
         </dependency>
     </dependencies>
-
-    <!-- 指定插件-->
-    <build>
-        <!-- 指定源码包和测试包的位置 -->
-        <sourceDirectory>src/main/scala</sourceDirectory>
-        <testSourceDirectory>src/test/scala</testSourceDirectory>
-        <plugins>
-            <!-- 指定编译scala的插件 -->
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.2</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                        <configuration>
-                            <args>
-                                <arg>-dependencyfile</arg>
-                                <arg>${project.build.directory}/.scala_dependencies</arg>
-                            </args>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
 </project>
