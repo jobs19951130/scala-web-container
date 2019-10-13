@@ -29,8 +29,14 @@ class WarpRequest(inputStream: InputStream){
     method = firstLine.substring(0,index).trim
     val urlStr = firstLine.substring(index, firstLine.indexOf("HTTP/")).trim
 
+    val headerStr = requestInfo.substring(requestInfo.indexOf(CRLF),requestInfo.indexOf("\r\n\r\n")).trim
+    header = parseParameter(headerStr,"header")
+    val bodyStr = requestInfo.substring(requestInfo.indexOf("\r\n\r\n")).trim
+
+
     if (method.equalsIgnoreCase("post")) {
       url = urlStr
+      body = parseParameter(bodyStr,"body")
     }
 
     else if (method.equalsIgnoreCase("get")) if (urlStr.contains("?")) { //是否存在参数
@@ -38,15 +44,9 @@ class WarpRequest(inputStream: InputStream){
       url = urlArray(0)
       requestParameter = urlArray(1) //接收请求参数
       parameter = parseParameter(requestParameter,"parameter")
-      println("parameter------"+parameter)
     }
 
     else url = urlStr
-
-    val headerStr = requestInfo.substring(requestInfo.indexOf(CRLF),requestInfo.indexOf("\r\n\r\n")).trim
-    header = parseParameter(headerStr,"header")
-    val bodyStr = requestInfo.substring(requestInfo.indexOf("\r\n\r\n")).trim
-    body = parseParameter(bodyStr,"body")
     Request(method,url,parameter,header,body)
   }
   def parseParameter(requestParameter : String, method : String):Map[String,String]={
