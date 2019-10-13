@@ -10,7 +10,7 @@ class ActorPool extends Actor{
       val response = new Response(outputStream)
       val requestInfo = request.parseRequest()
       if(requestInfo!=null){
-        DoAction.process(requestInfo,response)
+        DoAction.response(requestInfo,response)
       }
       outputStream.close()
       request.close
