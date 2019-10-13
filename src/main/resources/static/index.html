@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>gfgfgf</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+  <div style="width: 200px; height:200px; backgroudcolor:green">
+    <p>public static void main(String[] args){
+      try {
+        InputStreamReader in = new InputStreamReader(
+            new FileInputStream("D:\\bf\\Desktop\\test.txt"), "UTF-8");
+        int n ;
+        while((n = in.read()) != -1){
+          System.out.print((char)n); 
+        }
+        in.close();
+      } catch (UnsupportedEncodingException e) {
+        e.printStackTrace();
+      } catch (FileNotFoundException e) {
+        e.printStackTrace();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+       
+    }
+  
+  ————————————————
+  版权声明：本文为CSDN博主「佩奇与乔治的爱情故事」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+  原文链接：https://blog.csdn.net/qq_38227085/article/details/98879332</p>
+  </div>
+  </body>
+</html>
