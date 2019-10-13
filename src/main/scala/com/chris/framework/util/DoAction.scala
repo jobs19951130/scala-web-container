@@ -30,6 +30,7 @@ object DoAction {
   def getPage(request:Request,response:Response)={
     val pagePath = request.url
     //this.getClass.getResourceAsStream("static/"+pagePath)
+    println(pagePath)
     val file = new File(this.getClass.getResource("/static"+pagePath).getPath)
     val fileLength = file.length
     val fileContent = new Array[Byte](fileLength.intValue)
@@ -44,7 +45,6 @@ object DoAction {
         e.printStackTrace()
     }
     val str = new String(fileContent, "UTF-8")
-    println(str)
     response.println(str)
     response.push2Client(200)
     response.closeIO()

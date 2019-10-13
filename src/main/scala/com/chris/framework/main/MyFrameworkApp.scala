@@ -8,7 +8,7 @@ import com.chris.framework.util.{ActorPool, IOStream}
 object MyFrameworkApp {
 
   def startServer()={
-    val server = new ServerSocket(Config().port)
+    val server = new ServerSocket(Config().item("port").toInt)
     val actor = ActorPool.getActor("actor")
     while(true){
       val socket = server.accept()

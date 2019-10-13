@@ -48,8 +48,8 @@ class Response{
     }
     header.append(CRLF)
     header.append("Server:bjsxt Server/0.0.1").append(CRLF)
-    header.append("Date:").append(new Date).append(CRLF)
-    header.append("Content-type:text/html;charset=GBK").append(CRLF)
+    header.append("Date:").append(new Date).append(CRLF)//  Content-Type:image/jped
+    header.append("Content-type:text/html;charset=UTF-8").append(CRLF)
     //正文长度 ：字节长度
     header.append("Content-Length:").append(len).append(CRLF)
     header.append(CRLF) //分隔符
