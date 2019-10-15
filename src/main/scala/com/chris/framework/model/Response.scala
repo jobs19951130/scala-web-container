@@ -1,4 +1,4 @@
-package com.chris.framework.util
+package main.scala.com.chris.framework.model
 
 import java.io.{BufferedWriter, IOException, OutputStream, OutputStreamWriter}
 import java.net.Socket

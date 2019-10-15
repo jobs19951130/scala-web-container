@@ -1,7 +1,8 @@
-package com.chris.framework.util
+package main.scala.com.chris.framework.actions
+
+import com.chris.framework.util.ClassesCollector
 
 import scala.collection.mutable.Map
-import scala.util.matching.Regex
 object ActionsMappingFactory {
   val runtime = scala.reflect.runtime.universe
   private var actions:Map[String,Map[runtime.MethodMirror,Array[String]]] =  Map()

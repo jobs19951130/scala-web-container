@@ -1,8 +1,9 @@
-package com.chris.framework.util
+package main.scala.com.chris.framework.actions
 
-import java.io.{File, FileInputStream, FileNotFoundException, IOException, UnsupportedEncodingException}
+import java.io.{File, FileInputStream, FileNotFoundException, IOException}
 
 import com.chris.framework.configuration.Config
+import main.scala.com.chris.framework.model.{Request, Response}
 object DoAction {
 
   def response(request:Request,response:Response)={

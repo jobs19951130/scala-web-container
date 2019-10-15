@@ -1,8 +1,10 @@
 package com.chris.framework.main
 
 import java.net.ServerSocket
+
 import com.chris.framework.configuration.Config
-import com.chris.framework.util.{ActorPool, IOStream}
+import com.chris.framework.util.ActorPool
+import main.scala.com.chris.framework.model.IOStream
 
 object MyFrameworkApp {
 
