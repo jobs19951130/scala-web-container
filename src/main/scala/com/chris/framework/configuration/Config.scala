@@ -1,3 +1,2 @@
 package com.chris.framework.configuration
-
-case class Config(var item:Map[String,String]=Map("port"->"8080"))
+case class Config(var item:Map[String,String]=Map("port"->"8080"), var fileType:Map[String,List[String]]=Map("text"->List("html","htm","json","css","js"),"file"->List("png","ico","gif","jpg","jpeg")))
