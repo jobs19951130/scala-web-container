@@ -1,11 +1,19 @@
 package com.chris.framework.util
 
 import java.io.{File, FileInputStream, FileNotFoundException, IOException, UnsupportedEncodingException}
+
+import com.chris.framework.configuration.Config
 object DoAction {
 
   def response(request:Request,response:Response)={
-    if(request.url.contains(".")){
-      getPage(request,response)
+    val resource = request.url
+    if(resource.contains(".")){
+      if(Config().fileType("text").contains(resource.split("\\.").last.toLowerCase)){
+        getPage(request,response)
+      }
+      else{
+        getFile(request,response)
+      }
     }
     else
       process(request,response)
@@ -23,14 +31,12 @@ object DoAction {
       parameters=parameters.:+(p.substring(1,p.size-1))
     })
     response.print(methodName(parameters).toString)
-    response.push2Client(200)
+    response.push2Client(200, "Content-type:text/html;charset=UTF-8")
     response.closeIO()
   }
 
   def getPage(request:Request,response:Response)={
     val pagePath = request.url
-    //this.getClass.getResourceAsStream("static/"+pagePath)
-    println(pagePath)
     val file = new File(this.getClass.getResource("/static"+pagePath).getPath)
     val fileLength = file.length
     val fileContent = new Array[Byte](fileLength.intValue)
@@ -46,7 +52,29 @@ object DoAction {
     }
     val str = new String(fileContent, "UTF-8")
     response.println(str)
-    response.push2Client(200)
+    response.push2Client(200, "Content-type:text/html;charset=UTF-8")
+    response.closeIO()
+  }
+
+  def getFile(request:Request,response:Response)={
+    println(request.url)
+    val pagePath = request.url
+    val file = new File(this.getClass.getResource("/static"+pagePath).getPath)
+    val fileLength = file.length
+    val fileContent = new Array[Byte](fileLength.intValue)
+    try {
+      val in = new FileInputStream(file)
+      in.read(fileContent)
+      in.close()
+    } catch {
+      case e: FileNotFoundException =>
+        e.printStackTrace()
+      case e: IOException =>
+        e.printStackTrace()
+    }
+    response.outputStream.write("HTTP/1.1 200 OK\n".getBytes)
+    response.outputStream.write("Content-Type: text/html; charset=UTF-8\n\n".getBytes)
+    response.outputStream.write(fileContent)
     response.closeIO()
   }
 

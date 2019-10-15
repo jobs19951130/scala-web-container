@@ -6,7 +6,7 @@ import com.chris.framework.annotation.RequestAttribute
 @MyController
 object TestAction {
   @MyMapping("/5")
-  def test(@RequestAttribute("ss") ss:String): Unit ={
+  def test(@RequestAttribute(List("ss")) ss:List[String]): Unit ={
     println("2323")
   }
 }

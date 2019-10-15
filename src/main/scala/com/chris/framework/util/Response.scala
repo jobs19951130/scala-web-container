@@ -11,6 +11,7 @@ class Response{
   val CRLF:String = "\r\n"
   var BLANK:String = " "
   var  bw:BufferedWriter = null
+  var outputStream:OutputStream = null
   def this(client:Socket){
     this()
     try {bw = new BufferedWriter(new OutputStreamWriter(client.getOutputStream))
@@ -23,6 +24,7 @@ class Response{
   }
   def this(os:OutputStream){
     this()
+    this.outputStream = os
     bw = new BufferedWriter(new OutputStreamWriter(os))
   }
   def print(info:String):Response={
@@ -35,7 +37,7 @@ class Response{
     len+=(info+CRLF).getBytes.length
     this
   }
-  def createHeader(code:Int)={
+  def createHeader(code:Int,contentType:String)={
     header.append("HTTP/1.1").append(BLANK).append(code).append(BLANK)
     code match {
       case 200=>
@@ -44,23 +46,24 @@ class Response{
         header.append("NOT FOUND")
       case 505=>
         header.append("SERVER ERROR")
-
     }
     header.append(CRLF)
     header.append("Server:bjsxt Server/0.0.1").append(CRLF)
     header.append("Date:").append(new Date).append(CRLF)//  Content-Type:image/jped
-    header.append("Content-type:text/html;charset=UTF-8").append(CRLF)
+    header.append(contentType).append(CRLF)
     //正文长度 ：字节长度
     header.append("Content-Length:").append(len).append(CRLF)
     header.append(CRLF) //分隔符
   }
-  def push2Client(code:Int)={
-    createHeader(code)
+  def push2Client(code:Int,contentType:String)={
+    createHeader(code,contentType)
     bw.append(header.toString)
     bw.append(content.toString)
     bw.flush
   }
+
   def closeIO()={
+    outputStream.close()
     bw.close()
   }
 }

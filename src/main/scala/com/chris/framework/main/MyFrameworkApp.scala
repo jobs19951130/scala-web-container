@@ -1,7 +1,6 @@
 package com.chris.framework.main
 
 import java.net.ServerSocket
-
 import com.chris.framework.configuration.Config
 import com.chris.framework.util.{ActorPool, IOStream}
 

@@ -7,13 +7,6 @@ class ActorPool extends Actor{
     case IOStream(socket,inputStream,outputStream) =>
       val request = new WarpRequest(inputStream)
       val response = new Response(outputStream)
-
-//      val files = new FileInputStream("C:\\Users\\cheng\\Desktop\\1103366.png")
-//      val buf = new Array[Byte](files.available())
-//      files.read(buf)
-//      outputStream.write(buf)
-//      outputStream.flush()
-//      socket.shutdownOutput();
       val requestInfo = request.parseRequest()
       if(requestInfo!=null){
         DoAction.response(requestInfo,response)
