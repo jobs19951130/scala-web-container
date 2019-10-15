@@ -2,6 +2,7 @@ package com.framework.test
 
 import com.chris.framework.annotation.{MyController, MyFrameworkApplication, MyMapping, RequestAttribute}
 import scala.collection.mutable.ArrayBuffer
+
 @MyController
 @MyFrameworkApplication
 object People{

@@ -1,8 +1,8 @@
 package main.scala.com.chris.framework.actions
 
 import com.chris.framework.util.ClassesCollector
-
 import scala.collection.mutable.Map
+
 object ActionsMappingFactory {
   val runtime = scala.reflect.runtime.universe
   private var actions:Map[String,Map[runtime.MethodMirror,Array[String]]] =  Map()

@@ -1,10 +1,9 @@
 package com.chris.framework.util
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import java.io.FileInputStream
-
 import main.scala.com.chris.framework.actions.DoAction
 import main.scala.com.chris.framework.model.{IOStream, Response, WarpRequest}
+
 class ActorPool extends Actor{
   override def receive: Receive = {
     case IOStream(socket,inputStream,outputStream) =>
